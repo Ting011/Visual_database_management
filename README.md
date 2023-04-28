@@ -57,7 +57,7 @@ The SQLAlchemy extension for Flask is used to combine the front and back end. Fl
 ### 1. Clone the repository
 
 ```
-git clone https://github.com/CSC3170-2022Fall/project-team6
+https://github.com/Ting011/Visual_database_management.git
 ```
 
 ### 2. Go into working directory

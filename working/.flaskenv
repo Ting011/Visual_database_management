@@ -1,0 +1,3 @@
+FLASK_APP=bookshop.py
+FLASK_ENV=development
+SECRET_KEY=thequickbrownfoxjumpsoverthelazydog

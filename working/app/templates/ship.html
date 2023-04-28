@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+
+<div>
+    <h1>Shipment Information</h1>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <table class="table" border="1">
+            <thead>
+                <tr>
+                    <th>Shipment ID</th>
+                    <th>Order ID</th>
+                    <th>Shipment Date</th>
+                    <th>Expected Arrival</th>
+                </tr>
+            </thead>
+            <!-- todo -> implement calls for shipments -->
+
+            <!-- ship infomation -->
+            <tbody>
+                {% for shipment in shipments %}
+                <tr>
+                    <td>{{ shipment.shipment_id }}</td>
+                    <td>{{ shipment.order_id }}</td>
+                    <td>{{ shipment.shipment_date }}</td>
+                    <td>{{ shipment.estimated_arrival }}</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

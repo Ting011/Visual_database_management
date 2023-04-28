@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="starter-template">
+    <h1>Chips! Chips! Get your Chips here!</h1>
+</div>
+<button type="button" data-toggle="modal" class="btn btn-lg btn-primary" data-target="#insert_order">New Order</button>
+
+<!-- parting line -->
+<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="90%" color=#987cb9 SIZE=3>
+
+
+<!-- Modal 1 for adding a new order -->
+<div class="modal fade" id="insert_order" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Add an order</h4>
+            </div>
+            <form action="{{url_for('add_order')}}" method="post">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="chip_id" class="col-xs-2 control-label">Chip Type</label>
+                        <div class="col-xs-10">
+                            <!-- <input type="text" id="chip_id" class="form-control" name="chip_id"
+                                placeholder="Chip ID" /> -->
+
+                            <select name="chip_id">
+                                <option value="1">74HC74</option>
+                                <option value="2">74HC00</option>
+                                <option value="3">74HC04</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="chip_id" class= "col-xs-2 control-label">Quantity</label>
+                        <div class="col-xs-10">
+                            <!-- <input type="text" class="form-control" name="order_quantity" placeholder="Quantity" /> -->
+                            <select name="order_quantity">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        
+                        </div>
+                    </div>
+                    <!-- <div class="form-group row">
+                        <label for="chip_id" class="col-xs-2 control-label">Price</label>
+                        <div class="col-xs-10">
+                            <input type="number" class="form-control" name="price" placeholder="Price" />
+                        </div>
+                    </div> -->
+
+                    <div class="form-group row">
+                        <label for="chip_id" class="col-xs-2 control-label">Plant</label>
+                        <div class="col-xs-10">
+                            <select name="chip_address">
+                                <option value="Beijing">Beijing</option>
+                                <option value="Shanghai">Shanghai</option>
+                                <option value="Shenzhen">Shenzhen</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group row">
+                        <label for="chip_id" class="col-xs-2 control-label">Price</label>
+                        <div class="col-xs-10">
+                            <input type="number" class="form-control" name="order_price" placeholder="Price" />
+                        </div>
+                    </div> -->
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Modal 1 -->
+
+<!-- show current Customer order info -->
+<div class="">
+    <h2>Welcome {{user_name}} !</h2>
+    <h2>Order List</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table" border="1">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                    <th>Chip ID</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th colspan="2">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.order_id }}</td>
+                    <td>{{ order.order_date }}</td>
+                    <td>{{ order.chip_id }}</td>
+                    <td>{{ order.order_quantity }}</td>
+                    <td>{{ order.order_price }}</td>
+                    <td><button type="button" class="btn btn-success" data-toggle="modal"
+                            data-target="#update_order_{{order['order_id']}}">Update</button></td>
+
+
+                    <!-- Modal 2 for updating a order -->
+                    <div class="modal fade" id="update_order_{{order['order_id']}}" tabindex="-1" role="dialog"
+                        aria-labelledby="basicModal" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">Update an order</h4>
+                                </div>
+                                <form action="{{url_for('update_order', order_id=order['order_id'])}}" method="post">
+                                    <div class="modal-body">
+                                        <div class="form-group row">
+                                            <label for="chip_id" class="col-xs-2 control-label">Chip ID</label>
+                                            <div class="col-xs-10">
+                                                <input type="text" id="chip_id" class="form-control" name="chip_id"
+                                                    value="{{order['chip_id']}}" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="chip_id" class="col-xs-2 control-label">Quantity</label>
+                                            <div class="col-xs-10">
+                                                <input type="text" class="form-control" name="order_quantity"
+                                                    value="{{order['order_quantity']}}" />
+                                            </div>
+                                        </div>
+                                        <!-- <div class="form-group row">
+                                            <label for="chip_id" class="col-xs-2 control-label">Price</label>
+                                            <div class="col-xs-10">
+                                                <input type="number" class="form-control" name="order_price"
+                                                    value="{{order['order_price']}}" />
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Modal 2 -->
+                    <td><button type="button" class="btn btn-danger" data-toggle="modal"
+                            data-target="#delete_order_{{order['order_id']}}">Cancel</button></td>
+
+
+                    <!-- Modal 3 for deleting a order -->
+                    <div class="modal fade" id="delete_order_{{order['order_id']}}" tabindex="-1" role="dialog"
+                        aria-labelledby="basicModal" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">Cancel an order</h4>
+                                </div>
+                                <form action="{{url_for('delete', order_id=order['order_id'])}}" method="post">
+                                    <div class="modal-body">
+                                        <div class="form-group row">
+                                            <label class="col-sm-12 col-form-label">Do you want to cancel the order for
+                                                <span style='font-weight:bold;color:red'> 
+                                                   {{order['order_quantity']}} Units of Chip ID {{order['chip_id']}}</span>
+                                                ?</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-danger">Yes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Modal 3-->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
